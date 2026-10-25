@@ -1,0 +1,23 @@
+#!/bin/sh
+
+case "$1" in
+  start)
+    echo "Starting Tapo recording service..."
+    killall -9 ffmpeg >/dev/null 2>&1
+    /opt/bin/tapo_record.sh &
+    ;;
+  stop)
+    echo "Stopping Tapo recording service..."
+    killall -9 ffmpeg tapo_record.sh >/dev/null 2>&1
+    ;;
+  restart)
+    $0 stop
+    sleep 2
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+    ;;
+esac
+exit 0
